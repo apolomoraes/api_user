@@ -2,6 +2,19 @@ import { Request, Response, response } from "express";
 import User from "../database/schemas/User";
 
 class UserController {
+  async find(req: Request, res: Response) {
+    try {
+      const users = await User.find();
+
+      return res.json(users);
+    } catch (error) {
+      return res.status(500).json({
+        error: "Erro inesperado, tente novamente mais tarde",
+        message: error,
+      })
+    }
+  }
+
   async create(req: Request, res: Response) {
     const { name, email, password } = req.body;
 
